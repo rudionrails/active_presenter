@@ -1,4 +1,4 @@
-require File.dirname(__FILE__)+'/test_helper'
+require File.dirname(__FILE__) + '/test_helper'
 
 Expectations do
   expect nil do
@@ -233,9 +233,10 @@ Expectations do
   end
 
   expect nil do
-    returning(SignupPresenter.new(:user => User.new(hash_for_user))) do |presenter|
-      presenter.save!
-    end.id
+    presenter = SignupPresenter.new(:user => User.new(hash_for_user))
+    presenter.save
+
+    presenter.id
   end
   
   expect CantSavePresenter.new.not.to.be.save # it won't save because the filter chain will halt
@@ -260,25 +261,24 @@ Expectations do
   expect SamePrefixPresenter.new.to.be.respond_to?(:account_info_info)
 
   expect [:before_validation, :before_save, :after_save] do
-    returning(CallbackOrderingPresenter.new) do |presenter|
-      presenter.save!
-    end.steps
+    presenter = CallbackOrderingPresenter.new
+    presenter.save!
+
+    presenter.steps
   end
 
   expect [:before_validation, :before_save] do
-    returning(CallbackCantSavePresenter.new) do |presenter|
-      presenter.save
-    end.steps
+    presenter = CallbackCantSavePresenter.new
+    presenter.save
+
+    presenter.steps
   end
 
   expect [:before_validation, :before_save] do
-    returning(CallbackCantSavePresenter.new) do |presenter|
-      begin
-        presenter.save!
-      rescue ActiveRecord::RecordNotSaved
-        # NOP
-      end
-    end.steps
+    presenter = CallbackCantSavePresenter.new
+    presenter.save! rescue nil
+
+    presenter.steps
   end
 
   expect ActiveRecord::RecordNotSaved do
@@ -290,19 +290,17 @@ Expectations do
   end
 
   expect [:before_validation] do
-    returning(CallbackCantValidatePresenter.new) do |presenter|
-      begin
-        presenter.save!
-      rescue ActiveRecord::RecordInvalid
-        # NOP
-      end
-    end.steps
+    presenter = CallbackCantValidatePresenter.new
+    presenter.save! rescue nil
+
+    presenter.steps
   end
 
   expect [:before_validation] do
-    returning(CallbackCantValidatePresenter.new) do |presenter|
-      presenter.save
-    end.steps
+    presenter = CallbackCantValidatePresenter.new
+    presenter.save
+
+    presenter.steps
   end
 
   expect ActiveRecord::Errors.any_instance.to.receive(:clear).twice do

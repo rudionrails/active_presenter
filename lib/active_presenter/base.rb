@@ -249,7 +249,7 @@ module ActivePresenter
       true
     end
 
-    protected
+    private
       def presented_instances
         presented.keys.map { |key| send(key) }
       end

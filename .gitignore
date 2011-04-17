@@ -1,2 +1,7 @@
-rdoc
-pkg
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
+
+# RubyMine
+.idea

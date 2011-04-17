@@ -1,7 +1,7 @@
-require 'rubygems'
-require 'active_record'
-Dir.glob(File.dirname(__FILE__)+'/active_presenter/**/*.rb').each { |l| require l }
+require 'active_support'
 
 module ActivePresenter
-  NAME = 'active_presenter'
+
+  autoload :Base, File.dirname(__FILE__) + '/active_presenter/base'
+  
 end

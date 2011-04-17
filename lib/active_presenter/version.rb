@@ -1,9 +1,3 @@
 module ActivePresenter
-  module VERSION
-    MAJOR    = 1
-    MINOR    = 3
-    TINY     = 0
-    
-    STRING   = [MAJOR, MINOR, TINY].join('.')
-  end
+  VERSION = "1.3.0"
 end

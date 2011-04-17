@@ -1,4 +1,6 @@
-require File.dirname(__FILE__)+'/../lib/active_presenter' unless defined?(ActivePresenter)
+require File.dirname(__FILE__) + '/../lib/active_presenter'
+
+require 'active_record'
 require 'expectations'
 require 'logger'
 
